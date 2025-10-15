@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo da Cobrinha</title>
+    <link rel="stylesheet" href="style.css">
+   
+</head>
+<body>
+    <div class="celular">
+        <div class="tela">
+            <canvas id="canvasJogo" width="300" height="300"></canvas>
+            <div class="informacoes">
+                <div>PONTOS: <span id="score">0</span></div>
+                <div>RECORDE: <span id="highScore">0</span></div> 
+            </div>
+            <div class="fim-jogo" id="gameOver">
+                <h2>Fim de Jogo</h2>
+                <p>Pontuação: <span id="finalScore">0</span></p>
+                <p style="margin-top: 15px; font-size: 12px;">Pressione ESPAÇO para jogar novamente</p>
+            </div>
+            <div class="mensagem-inicio" id="startMessage">
+                <p>JOGO DA COBRINHA</p>
+                <p style="margin-top: 10px; font-size: 12px;">Pressione qualquer SETA para começar</p>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
