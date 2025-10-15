@@ -1,157 +1,143 @@
-    const canvas = document.getElementById('canvasJogo');
+  const canvas = document.getElementById('jogoCanvas');
         const ctx = canvas.getContext('2d');
-        const scoreElement = document.getElementById('score');
-        const highScoreElement = document.getElementById('highScore');
-        const gameOverElement = document.getElementById('gameOver');
-        const startMessageElement = document.getElementById('startMessage');
-        const finalScoreElement = document.getElementById('finalScore');
+        const pontuacaoElemento = document.getElementById('pontuacao');
+        const recordeElemento = document.getElementById('recorde');
+        const fimJogoElemento = document.getElementById('fimJogo');
+        const mensagemInicialElemento = document.getElementById('mensagemInicial');
+        const pontuacaoFinalElemento = document.getElementById('pontuacaoFinal');
 
-        const gridSize = 15;
-        const tileCount = canvas.width / gridSize;
+        const tamanhoGrade = 15;
+        const quantidadeBlocos = canvas.width / tamanhoGrade;
 
-        let snake = [{x: 10, y: 10}];
-        let food = {x: 15, y: 15};
+        let cobrinha = [{x: 10, y: 10}];
+        let comida = {x: 15, y: 15};
         let dx = 0;
         let dy = 0;
-        let score = 0;
-        let highScore = 0;
-        let gameRunning = false;
-        let gameStarted = false;
-        let gameLoop;
+        let pontuacao = 0;
+        let recorde = 0;
+        let jogoRodando = false;
+        let jogoIniciado = false;
+        let cicloJogo;
 
-        function drawGame() {
-            // Limpa o canvas
+        function desenharJogo() {
             ctx.fillStyle = '#c7d67f';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
             // Desenha a comida
             ctx.fillStyle = '#1a1a1a';
-            ctx.fillRect(food.x * gridSize, food.y * gridSize, gridSize - 1, gridSize - 1);
+            ctx.fillRect(comida.x * tamanhoGrade, comida.y * tamanhoGrade, tamanhoGrade - 1, tamanhoGrade - 1);
 
-            // Desenha a cobra
+            // Desenha a cobrinha
             ctx.fillStyle = '#1a1a1a';
-            snake.forEach((segment, index) => {
-                ctx.fillRect(segment.x * gridSize, segment.y * gridSize, gridSize - 1, gridSize - 1);
+            cobrinha.forEach(segmento => {
+                ctx.fillRect(segmento.x * tamanhoGrade, segmento.y * tamanhoGrade, tamanhoGrade - 1, tamanhoGrade - 1);
             });
         }
 
-        function moveSnake() {
-            if (!gameRunning) return;
+        function moverCobrinha() {
+            if (!jogoRodando) return;
 
-            const head = {x: snake[0].x + dx, y: snake[0].y + dy};
+            const cabeca = {x: cobrinha[0].x + dx, y: cobrinha[0].y + dy};
 
-            // Verifica colisão com paredes
-            if (head.x < 0 || head.x >= tileCount || head.y < 0 || head.y >= tileCount) {
-                endGame();
+            // Colisão com paredes
+            if (cabeca.x < 0 || cabeca.x >= quantidadeBlocos || cabeca.y < 0 || cabeca.y >= quantidadeBlocos) {
+                encerrarJogo();
                 return;
             }
 
-            // Verifica colisão com o próprio corpo
-            if (snake.some(segment => segment.x === head.x && segment.y === head.y)) {
-                endGame();
+            // Colisão com o próprio corpo
+            if (cobrinha.some(segmento => segmento.x === cabeca.x && segmento.y === cabeca.y)) {
+                encerrarJogo();
                 return;
             }
 
-            snake.unshift(head);
+            cobrinha.unshift(cabeca);
 
-            // Verifica se comeu a comida
-            if (head.x === food.x && head.y === food.y) {
-                score++;
-                scoreElement.textContent = score;
-                generateFood();
+            // Comeu a comida
+            if (cabeca.x === comida.x && cabeca.y === comida.y) {
+                pontuacao++;
+                pontuacaoElemento.textContent = pontuacao;
+                gerarComida();
             } else {
-                snake.pop();
+                cobrinha.pop();
             }
 
-            drawGame();
+            desenharJogo();
         }
 
-        function generateFood() {
-            let newFood;
+        function gerarComida() {
+            let novaComida;
             do {
-                newFood = {
-                    x: Math.floor(Math.random() * tileCount),
-                    y: Math.floor(Math.random() * tileCount)
+                novaComida = {
+                    x: Math.floor(Math.random() * quantidadeBlocos),
+                    y: Math.floor(Math.random() * quantidadeBlocos)
                 };
-            } while (snake.some(segment => segment.x === newFood.x && segment.y === newFood.y));
+            } while (cobrinha.some(segmento => segmento.x === novaComida.x && segmento.y === novaComida.y));
             
-            food = newFood;
+            comida = novaComida;
         }
 
-        function endGame() {
-            gameRunning = false;
-            clearInterval(gameLoop);
+        function encerrarJogo() {
+            jogoRodando = false;
+            clearInterval(cicloJogo);
             
-            if (score > highScore) {
-                highScore = score;
-                highScoreElement.textContent = highScore;
+            if (pontuacao > recorde) {
+                recorde = pontuacao;
+                recordeElemento.textContent = recorde;
             }
             
-            finalScoreElement.textContent = score;
-            gameOverElement.style.display = 'block';
+            pontuacaoFinalElemento.textContent = pontuacao;
+            fimJogoElemento.style.display = 'block';
         }
 
-        function startGame() {
-            snake = [{x: 10, y: 10}];
+        function iniciarJogo() {
+            cobrinha = [{x: 10, y: 10}];
             dx = 0;
             dy = 0;
-            score = 0;
-            scoreElement.textContent = score;
-            gameRunning = true;
-            gameStarted = true;
-            gameOverElement.style.display = 'none';
-            startMessageElement.style.display = 'none';
+            pontuacao = 0;
+            pontuacaoElemento.textContent = pontuacao;
+            jogoRodando = true;
+            jogoIniciado = true;
+            fimJogoElemento.style.display = 'none';
+            mensagemInicialElemento.style.display = 'none';
             
-            generateFood();
-            drawGame();
+            gerarComida();
+            desenharJogo();
             
-            clearInterval(gameLoop);
-            gameLoop = setInterval(moveSnake, 250);
+            clearInterval(cicloJogo);
+            cicloJogo = setInterval(moverCobrinha, 250);
         }
 
         document.addEventListener('keydown', (e) => {
-            if (!gameStarted && (e.key.startsWith('Arrow'))) {
-                startGame();
+            if (!jogoIniciado && (e.key.startsWith('Arrow'))) {
+                iniciarJogo();
             }
 
-            if (e.key === ' ' && !gameRunning && gameStarted) {
+            if (e.key === ' ' && !jogoRodando && jogoIniciado) {
                 e.preventDefault();
-                startGame();
+                iniciarJogo();
             }
 
-            if (!gameRunning) return;
+            if (!jogoRodando) return;
 
             switch(e.key) {
                 case 'ArrowUp':
-                    if (dy === 0) {
-                        dx = 0;
-                        dy = -1;
-                    }
+                    if (dy === 0) { dx = 0; dy = -1; }
                     e.preventDefault();
                     break;
                 case 'ArrowDown':
-                    if (dy === 0) {
-                        dx = 0;
-                        dy = 1;
-                    }
+                    if (dy === 0) { dx = 0; dy = 1; }
                     e.preventDefault();
                     break;
                 case 'ArrowLeft':
-                    if (dx === 0) {
-                        dx = -1;
-                        dy = 0;
-                    }
+                    if (dx === 0) { dx = -1; dy = 0; }
                     e.preventDefault();
                     break;
                 case 'ArrowRight':
-                    if (dx === 0) {
-                        dx = 1;
-                        dy = 0;
-                    }
+                    if (dx === 0) { dx = 1; dy = 0; }
                     e.preventDefault();
                     break;
             }
         });
 
-        // Desenha a tela inicial
-        drawGame();
+        desenharJogo();

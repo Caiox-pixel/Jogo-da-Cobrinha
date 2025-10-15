@@ -1,4 +1,4 @@
- body {
+  body {
             margin: 0;
             padding: 0;
             display: flex;
@@ -9,14 +9,14 @@
             font-family: 'Courier New', monospace;
         }
 
-        .celular {
+        #celular {
             background: #2a2a2a;
             border-radius: 20px;
             padding: 20px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.5);
         }
 
-        .tela {
+        #tela {
             background: #9eb84f;
             border: 3px solid #1a1a1a;
             border-radius: 5px;
@@ -24,7 +24,7 @@
             position: relative;
         }
 
-        #canvasJogo {
+        #jogoCanvas {
             display: block;
             background: #c7d67f;
             border: 2px solid #627a3b;
@@ -32,7 +32,7 @@
             image-rendering: crisp-edges;
         }
 
-        .informacoes {
+        #informacoes {
             display: flex;
             justify-content: space-between;
             margin-top: 10px;
@@ -41,7 +41,7 @@
             font-weight: bold;
         }
 
-        .fim-jogo {
+        #fimJogo {
             position: absolute;
             top: 50%;
             left: 50%;
@@ -54,17 +54,17 @@
             display: none;
         }
 
-        .fim-jogo h2 {
+        #fimJogo h2 {
             margin: 0 0 10px 0;
             font-size: 24px;
         }
 
-        .fim-jogo p {
+        #fimJogo p {
             margin: 5px 0;
             font-size: 16px;
         }
 
-        .mensagem-inicio {
+        #mensagemInicial {
             position: absolute;
             top: 50%;
             left: 50%;
