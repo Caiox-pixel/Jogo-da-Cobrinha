@@ -7,7 +7,7 @@ body {
     min-height: 100vh;
     background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
     font-family: 'Courier New', monospace;
-    position: relative; /* Para o parágrafo de créditos */
+    position: relative;
 }
 
 #celular {
@@ -40,6 +40,25 @@ body {
     color: #1a1a1a;
     font-size: 18px;
     font-weight: bold;
+}
+
+/* 🔘 Botões de velocidade */
+#controles {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 10px;
+}
+#controles button {
+    background: #1a1a1a;
+    color: #c7d67f;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+#controles button:hover {
+    background: #3a3a3a;
 }
 
 #fimJogo {

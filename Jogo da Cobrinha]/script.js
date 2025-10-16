@@ -4,6 +4,8 @@ const pontuacaoElemento = document.getElementById('pontuacao');
 const fimJogoElemento = document.getElementById('fimJogo');
 const mensagemInicialElemento = document.getElementById('mensagemInicial');
 const pontuacaoFinalElemento = document.getElementById('pontuacaoFinal');
+const botaoMais = document.getElementById('aumentarVelocidade');
+const botaoMenos = document.getElementById('diminuirVelocidade');
 
 const tamanhoGrade = 15;
 const quantidadeBlocos = canvas.width / tamanhoGrade;
@@ -16,19 +18,44 @@ let pontuacao = 0;
 let jogoRodando = false;
 let jogoIniciado = false;
 let cicloJogo;
+let velocidade = 250;
 
 function desenharJogo() {
     ctx.fillStyle = '#96b400ff';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    // Desenha comida
+    // 🍎 comida
     ctx.fillStyle = '#1a1a1a';
     ctx.fillRect(comida.x * tamanhoGrade, comida.y * tamanhoGrade, tamanhoGrade - 1, tamanhoGrade - 1);
 
-    // Desenha cobrinha
-    ctx.fillStyle = '#1a1a1a';
-    cobrinha.forEach(segmento => {
-        ctx.fillRect(segmento.x * tamanhoGrade, segmento.y * tamanhoGrade, tamanhoGrade - 1, tamanhoGrade - 1);
+    // 🐍 corpo
+    cobrinha.forEach((segmento, index) => {
+        if (index === 0) {
+            // Cabeça
+            ctx.fillStyle = '#000000';
+            ctx.fillRect(segmento.x * tamanhoGrade, segmento.y * tamanhoGrade, tamanhoGrade - 1, tamanhoGrade - 1);
+
+            // 👀 olhos
+            ctx.fillStyle = '#ffffff';
+            let olhoTamanho = 3;
+            let offset = 3;
+            if (dx === 1) { // indo para direita
+                ctx.fillRect(segmento.x * tamanhoGrade + 10, segmento.y * tamanhoGrade + 3, olhoTamanho, olhoTamanho);
+                ctx.fillRect(segmento.x * tamanhoGrade + 10, segmento.y * tamanhoGrade + 9, olhoTamanho, olhoTamanho);
+            } else if (dx === -1) { // esquerda
+                ctx.fillRect(segmento.x * tamanhoGrade + 2, segmento.y * tamanhoGrade + 3, olhoTamanho, olhoTamanho);
+                ctx.fillRect(segmento.x * tamanhoGrade + 2, segmento.y * tamanhoGrade + 9, olhoTamanho, olhoTamanho);
+            } else if (dy === -1) { // cima
+                ctx.fillRect(segmento.x * tamanhoGrade + 3, segmento.y * tamanhoGrade + 2, olhoTamanho, olhoTamanho);
+                ctx.fillRect(segmento.x * tamanhoGrade + 9, segmento.y * tamanhoGrade + 2, olhoTamanho, olhoTamanho);
+            } else if (dy === 1) { // baixo
+                ctx.fillRect(segmento.x * tamanhoGrade + 3, segmento.y * tamanhoGrade + 10, olhoTamanho, olhoTamanho);
+                ctx.fillRect(segmento.x * tamanhoGrade + 9, segmento.y * tamanhoGrade + 10, olhoTamanho, olhoTamanho);
+            }
+        } else {
+            ctx.fillStyle = '#1a1a1a';
+            ctx.fillRect(segmento.x * tamanhoGrade, segmento.y * tamanhoGrade, tamanhoGrade - 1, tamanhoGrade - 1);
+        }
     });
 }
 
@@ -75,7 +102,6 @@ function gerarComida() {
 function encerrarJogo() {
     jogoRodando = false;
     clearInterval(cicloJogo);
-
     pontuacaoFinalElemento.textContent = pontuacao;
     fimJogoElemento.style.display = 'block';
 }
@@ -95,7 +121,7 @@ function iniciarJogo() {
     desenharJogo();
 
     clearInterval(cicloJogo);
-    cicloJogo = setInterval(moverCobrinha, 250);
+    cicloJogo = setInterval(moverCobrinha, velocidade);
 }
 
 document.addEventListener('keydown', (e) => {
@@ -129,5 +155,23 @@ document.addEventListener('keydown', (e) => {
             break;
     }
 });
+
+// ⚙️ Controles de velocidade
+botaoMais.addEventListener('click', () => {
+    if (velocidade > 50) velocidade -= 25;
+    reiniciarVelocidade();
+});
+
+botaoMenos.addEventListener('click', () => {
+    if (velocidade < 500) velocidade += 25;
+    reiniciarVelocidade();
+});
+
+function reiniciarVelocidade() {
+    if (jogoRodando) {
+        clearInterval(cicloJogo);
+        cicloJogo = setInterval(moverCobrinha, velocidade);
+    }
+}
 
 desenharJogo();
