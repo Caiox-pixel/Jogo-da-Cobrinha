@@ -1,7 +1,6 @@
 const canvas = document.getElementById('jogoCanvas');
 const ctx = canvas.getContext('2d');
 const pontuacaoElemento = document.getElementById('pontuacao');
-const recordeElemento = document.getElementById('recorde');
 const fimJogoElemento = document.getElementById('fimJogo');
 const mensagemInicialElemento = document.getElementById('mensagemInicial');
 const pontuacaoFinalElemento = document.getElementById('pontuacaoFinal');
@@ -14,13 +13,12 @@ let comida = {x: 15, y: 15};
 let dx = 0;
 let dy = 0;
 let pontuacao = 0;
-let recorde = 0;
 let jogoRodando = false;
 let jogoIniciado = false;
 let cicloJogo;
 
 function desenharJogo() {
-    ctx.fillStyle = '#c7d67f';
+    ctx.fillStyle = '#96b400ff';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     // Desenha comida
@@ -78,11 +76,6 @@ function encerrarJogo() {
     jogoRodando = false;
     clearInterval(cicloJogo);
 
-    if (pontuacao > recorde) {
-        recorde = pontuacao;
-        recordeElemento.textContent = recorde;
-    }
-
     pontuacaoFinalElemento.textContent = pontuacao;
     fimJogoElemento.style.display = 'block';
 }
@@ -106,7 +99,7 @@ function iniciarJogo() {
 }
 
 document.addEventListener('keydown', (e) => {
-    if (!jogoIniciado && (e.key.startsWith('Arrow'))) {
+    if (!jogoIniciado && e.key.startsWith('Arrow')) {
         iniciarJogo();
     }
 

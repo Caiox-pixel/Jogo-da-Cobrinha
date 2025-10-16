@@ -2,12 +2,12 @@ body {
     margin: 0;
     padding: 0;
     display: flex;
-    justify-content: center; /* Centraliza horizontalmente */
-    align-items: center;     /* Centraliza verticalmente */
+    justify-content: center;
+    align-items: center;
     min-height: 100vh;
     background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
     font-family: 'Courier New', monospace;
-    position: relative; /* Necessário para posicionar o texto dos créditos */
+    position: relative; /* Para o parágrafo de créditos */
 }
 
 #celular {
@@ -35,7 +35,7 @@ body {
 
 #informacoes {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     margin-top: 10px;
     color: #1a1a1a;
     font-size: 18px;
@@ -75,7 +75,6 @@ body {
     font-size: 14px;
 }
 
-/* Créditos no canto inferior direito */
 #creditos {
     color: white;
     font-size: 12px;
