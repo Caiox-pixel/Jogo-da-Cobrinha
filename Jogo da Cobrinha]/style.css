@@ -13,7 +13,7 @@ body {
 #celular {
     background: #2a2a2a;
     border-radius: 20px;
-    padding: 20px;
+    padding: 25px;
     box-shadow: 0 10px 40px rgba(0,0,0,0.5);
 }
 
@@ -31,18 +31,20 @@ body {
     border: 2px solid #627a3b;
     image-rendering: pixelated;
     image-rendering: crisp-edges;
+    width: 600px;
+    height: 600px;
 }
 
 #informacoes {
     display: flex;
     justify-content: center;
+    gap: 15px;
     margin-top: 10px;
     color: #1a1a1a;
     font-size: 18px;
     font-weight: bold;
 }
 
-/* 🔘 Botões de velocidade */
 #controles {
     display: flex;
     justify-content: space-around;
@@ -61,37 +63,20 @@ body {
     background: #3a3a3a;
 }
 
-#fimJogo {
+#fimJogo, #mensagemInicial {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+#fimJogo {
     background: rgba(0, 0, 0, 0.8);
     color: #9eb84f;
     padding: 20px;
     border-radius: 5px;
-    text-align: center;
     display: none;
-}
-
-#fimJogo h2 {
-    margin: 0 0 10px 0;
-    font-size: 24px;
-}
-
-#fimJogo p {
-    margin: 5px 0;
-    font-size: 16px;
-}
-
-#mensagemInicial {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    color: #1a1a1a;
-    font-size: 14px;
 }
 
 #creditos {
