@@ -8,7 +8,7 @@ const botaoMais = document.getElementById('aumentarVelocidade');
 const botaoMenos = document.getElementById('diminuirVelocidade');
 const velocidadeElemento = document.getElementById('velocidadeAtual');
 
-// ⚙️ CONFIGURAÇÕES
+//CONFIGURAÇÕES
 const tamanhoGrade = 30;
 const quantidadeBlocos = canvas.width / tamanhoGrade;
 
@@ -25,18 +25,18 @@ let cicloJogo;
 let nivelVelocidade = 1;
 let velocidade = 250; // ms entre movimentos
 
-// 🎨 DESENHAR JOGO + OLHOS
+//DESENHAR JOGO + OLHOS
 function desenharJogo() {
     ctx.fillStyle = '#96b400ff';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    // 🍎 comida
-    ctx.fillStyle = '#1a1a1a';
+    //comida
+    ctx.fillStyle = '#ff0000ff';
     ctx.fillRect(comida.x * tamanhoGrade, comida.y * tamanhoGrade, tamanhoGrade - 2, tamanhoGrade - 2);
 
-    // 🐍 corpo
+    //corpo
     cobrinha.forEach((segmento, index) => {
-        ctx.fillStyle = index === 0 ? '#000000' : '#1a1a1a';
+        ctx.fillStyle = index === 0 ? '#00bbffff' : '#00bbffff';
         ctx.fillRect(segmento.x * tamanhoGrade, segmento.y * tamanhoGrade, tamanhoGrade - 2, tamanhoGrade - 2);
 
         // 👀 olhos (somente na cabeça)
@@ -46,7 +46,7 @@ function desenharJogo() {
     });
 }
 
-// 👀 função dos olhos
+// função dos olhos
 function desenharOlhos(x, y) {
     const olhoTam = 4;
     let posicoes = [];
@@ -91,7 +91,7 @@ function desenharOlhos(x, y) {
     });
 }
 
-// 🚶 MOVIMENTO
+// MOVIMENTO
 function moverCobrinha() {
     if (!jogoRodando) return;
 
@@ -110,7 +110,7 @@ function moverCobrinha() {
 
     cobrinha.unshift(cabeca);
 
-    // 🍎 comer
+
     if (cabeca.x === comida.x && cabeca.y === comida.y) {
         pontuacao++;
         pontuacaoElemento.textContent = pontuacao;
@@ -122,7 +122,7 @@ function moverCobrinha() {
     desenharJogo();
 }
 
-// 🍏 GERAR COMIDA
+
 function gerarComida() {
     let novaComida;
     do {
@@ -134,7 +134,7 @@ function gerarComida() {
     comida = novaComida;
 }
 
-// 🛑 FIM
+//FIM
 function encerrarJogo() {
     jogoRodando = false;
     clearInterval(cicloJogo);
@@ -142,7 +142,7 @@ function encerrarJogo() {
     fimJogoElemento.style.display = 'block';
 }
 
-// ▶️ INÍCIO
+//INÍCIO
 function iniciarJogo() {
     cobrinha = [{x: 10, y: 10}];
     dx = 0;
@@ -161,7 +161,7 @@ function iniciarJogo() {
     cicloJogo = setInterval(moverCobrinha, velocidade);
 }
 
-// ⌨️ CONTROLES
+//CONTROLES
 document.addEventListener('keydown', (e) => {
     if (!jogoIniciado && e.key.startsWith('Arrow')) iniciarJogo();
 
@@ -180,7 +180,7 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
-// ⚙️ VELOCIDADE
+//VELOCIDADE
 botaoMais.addEventListener('click', () => {
     if (nivelVelocidade < 10) {
         nivelVelocidade++;
@@ -206,5 +206,3 @@ function atualizarVelocidade() {
 }
 
 desenharJogo();
-
-
